@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="sw" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lumora | Nuru Nyumbani Yako - Deep cleaning, fumigation, laundry, errands & more — delivered with care.</title>
 
-  <!-- Tailwind (required) -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
@@ -31,13 +29,10 @@
       line-height:1.7;
     }
 
-    /* Custom scrollbar */
     ::-webkit-scrollbar{width:10px;}
     ::-webkit-scrollbar-track{background:#e8faf8;}
     ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--lumora-accent),#011c18);border-radius:5px;}
-    ::-webkit-scrollbar-thumb:hover{background:var(--lumora-accent);}
 
-    /* Utility styles from your original */
     .font-serif{font-family:"Playfair Display",serif;}
 
     .text-gradient{
@@ -92,55 +87,224 @@
     .section-py{padding:100px 0;}
     @media (max-width:768px){.section-py{padding:60px 0;}}
 
-    /* --- Chat widget: responsive + professional --- */
-    .chat-safe-area{padding-bottom:env(safe-area-inset-bottom);}
-
-    /* Keep chat above the WhatsApp FAB; WhatsApp is lower */
-    .chat-fab-area{position:fixed;right:1.25rem;bottom:5.5rem;z-index:60;}
-    @media (max-width:640px){
-      .chat-fab-area{right:1rem;bottom:5.25rem;}
+    /* Language Toggle */
+    .lang-toggle{
+      display:flex;
+      background:rgba(255,255,255,.2);
+      border-radius:9999px;
+      padding:2px;
+      font-size:12px;
+      font-weight:600;
+    }
+    .lang-toggle button{
+      padding:6px 12px;
+      border-radius:9999px;
+      transition:all .2s;
+      color:var(--lumora-dark);
+      opacity:.7;
+    }
+    .lang-toggle button.active{
+      background:var(--lumora-accent);
+      opacity:1;
+      box-shadow:0 2px 8px rgba(26,245,208,.3);
     }
 
+    /* 3D Flip Cards for Pricing */
+    .pricing-container{
+      perspective:1500px;
+    }
+    
+    .pricing-card-wrapper{
+      transform-style:preserve-3d;
+      transition:transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .pricing-card-wrapper.revealed{
+      animation:cardReveal 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    
+    .pricing-card-wrapper:nth-child(1).revealed{animation-delay:0s;}
+    .pricing-card-wrapper:nth-child(2).revealed{animation-delay:0.15s;}
+    .pricing-card-wrapper:nth-child(3).revealed{animation-delay:0.3s;}
+    
+    @keyframes cardReveal{
+      0%{
+        opacity:0;
+        transform:rotateY(-90deg) translateZ(-100px) scale(0.8);
+      }
+      50%{
+        opacity:1;
+        transform:rotateY(15deg) translateZ(50px) scale(1.02);
+      }
+      100%{
+        opacity:1;
+        transform:rotateY(0deg) translateZ(0) scale(1);
+      }
+    }
+    
+    .pricing-card{
+      position:relative;
+      transform-style:preserve-3d;
+      transition:transform 0.5s ease, box-shadow 0.5s ease;
+    }
+    
+    .pricing-card:hover{
+      transform:translateY(-12px) rotateX(5deg) rotateY(-5deg);
+      box-shadow:
+        0 30px 60px rgba(1,28,24,.2),
+        0 0 40px rgba(26,245,208,.1);
+    }
+    
+    .pricing-card::before{
+      content:'';
+      position:absolute;
+      inset:-2px;
+      border-radius:2.7rem;
+      background:linear-gradient(135deg,var(--lumora-accent),var(--lumora-secondary),var(--lumora-tertiary));
+      opacity:0;
+      transition:opacity 0.4s;
+      z-index:-1;
+    }
+    
+    .pricing-card:hover::before{
+      opacity:1;
+      animation:borderGlow 2s linear infinite;
+    }
+    
+    @keyframes borderGlow{
+      0%,100%{filter:hue-rotate(0deg);}
+      50%{filter:hue-rotate(30deg);}
+    }
+    
+    .pricing-featured{
+      transform:scale(1.05);
+      z-index:10;
+    }
+    
+    .pricing-featured .pricing-card{
+      box-shadow:0 25px 50px rgba(1,28,24,.15);
+    }
+    
+    @media (max-width:768px){
+      .pricing-featured{transform:scale(1);}
+    }
+
+    /* Shine effect */
+    .shine-effect{
+      position:relative;
+      overflow:hidden;
+    }
+    .shine-effect::after{
+      content:'';
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:50%;
+      height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+      transition:left 0.6s;
+    }
+    .shine-effect:hover::after{
+      left:150%;
+    }
+
+    /* Chat widget */
+    .chat-safe-area{padding-bottom:env(safe-area-inset-bottom);}
+    .chat-fab-area{position:fixed;right:1.25rem;bottom:5.5rem;z-index:60;}
+    @media (max-width:640px){.chat-fab-area{right:1rem;bottom:5.25rem;}}
     .chat-panel{
       width:min(420px, calc(100vw - 2rem));
       max-height:min(72vh, 560px);
       box-shadow:0 20px 50px rgba(1,28,24,.18);
     }
-
-    @media (max-width:420px){
-      .chat-panel{width:calc(100vw - 1.5rem);}
-    }
-
+    @media (max-width:420px){.chat-panel{width:calc(100vw - 1.5rem);}}
     .chat-messages{overscroll-behavior:contain;}
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto !important;}
-      .card-hover,.btn-primary,.btn-secondary{transition:none !important;}
-    }
-
-    /* Simple appear animation */
     .chat-hidden{pointer-events:none;opacity:0;transform:translateY(10px) scale(.98);}
     .chat-shown{pointer-events:auto;opacity:1;transform:translateY(0) scale(1);}
+
+    /* Success Modal */
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(1,28,24,.6);
+      backdrop-filter:blur(8px);
+      z-index:100;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .3s;
+    }
+    .modal-overlay.active{opacity:1;pointer-events:auto;}
+    .modal-content{
+      background:white;
+      border-radius:2rem;
+      padding:2.5rem;
+      max-width:90%;
+      width:420px;
+      transform:scale(.9) translateY(20px);
+      transition:transform .3s;
+      text-align:center;
+    }
+    .modal-overlay.active .modal-content{transform:scale(1) translateY(0);}
+
+    /* Floating labels animation */
+    .form-group{position:relative;}
+    .form-group label{
+      position:absolute;
+      left:1.25rem;
+      top:1rem;
+      font-size:.875rem;
+      color:#9ca3af;
+      pointer-events:none;
+      transition:all .2s;
+    }
+    .form-group input:focus ~ label,
+    .form-group input:not(:placeholder-shown) ~ label,
+    .form-group textarea:focus ~ label,
+    .form-group textarea:not(:placeholder-shown) ~ label,
+    .form-group select:focus ~ label,
+    .form-group select:valid ~ label{
+      top:-.6rem;
+      left:.75rem;
+      font-size:.65rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      color:var(--lumora-accent);
+      background:var(--lumora-surfaceLight);
+      padding:0 .5rem;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important;animation-duration:0.01ms !important;}
+    }
   </style>
 </head>
 <body class="overflow-x-hidden">
 
   <!-- Navigation -->
   <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl">
-    <div id="nav-shell" class="glass rounded-full px-8 py-4 flex justify-between items-center shadow" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
+    <div id="nav-shell" class="glass rounded-full px-4 sm:px-8 py-3 sm:py-4 flex justify-between items-center shadow" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
       <div class="flex items-center space-x-2">
-        <span class="text-3xl font-extrabold tracking-tighter bg-gradient-to-r from-[var(--lumora-dark)] to-[var(--lumora-accent)] bg-clip-text text-transparent">LUMORA</span>
+        <span class="text-2xl sm:text-3xl font-extrabold tracking-tighter bg-gradient-to-r from-[var(--lumora-dark)] to-[var(--lumora-accent)] bg-clip-text text-transparent">LUMORA</span>
       </div>
-      <div class="hidden md:flex space-x-2 items-center">
-        <a href="#services" class="nav-pill px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]">Huduma</a>
-        <a href="#why-us" class="nav-pill px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]">Kutuhusu</a>
-        <a href="#process" class="nav-pill px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]">Process</a>
-        <a href="#pricing" class="nav-pill px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]">Bei</a>
-        <a href="#testimonials" class="nav-pill px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]">Reviews</a>
-        <a href="https://wa.me/254712345678" class="btn-primary ml-4 px-6 py-2.5 rounded-full font-bold text-sm flex items-center space-x-2" style="box-shadow:0 0 40px rgba(26,245,208,.3)">
+
+      <!-- Language Toggle -->
+      <div class="lang-toggle mr-2 sm:mr-4">
+        <button id="lang-sw" class="active">SW</button>
+        <button id="lang-en">EN</button>
+      </div>
+
+      <div class="hidden md:flex space-x-1 lg:space-x-2 items-center">
+        <a href="#services" class="nav-pill px-3 lg:px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]" data-sw="Huduma" data-en="Services">Huduma</a>
+        <a href="#why-us" class="nav-pill px-3 lg:px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]" data-sw="Kutuhusu" data-en="About Us">Kutuhusu</a>
+        <a href="#process" class="nav-pill px-3 lg:px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]" data-sw="Mchakato" data-en="Process">Mchakato</a>
+        <a href="#pricing" class="nav-pill px-3 lg:px-5 py-2 font-medium text-sm text-[var(--lumora-dark)]" data-sw="Bei" data-en="Pricing">Bei</a>
+        <a href="#contact" class="btn-primary ml-2 lg:ml-4 px-4 lg:px-6 py-2.5 rounded-full font-bold text-sm flex items-center space-x-2" style="box-shadow:0 0 40px rgba(26,245,208,.3)">
           <i class="fab fa-whatsapp"></i>
-          <span>Piga Quote</span>
+          <span data-sw="Piga Quote" data-en="Get Quote">Piga Quote</span>
         </a>
       </div>
       <button id="mobile-menu-button" class="md:hidden text-[var(--lumora-dark)] p-2" aria-label="Open menu">
@@ -150,14 +314,13 @@
 
     <div id="mobile-menu" class="hidden absolute top-full mt-2 left-0 w-full bg-white rounded-3xl p-6" style="box-shadow:0 10px 40px rgba(1,28,24,.12)">
       <div class="flex flex-col space-y-3">
-        <a href="#services" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100">Huduma</a>
-        <a href="#why-us" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100">Kutuhusu</a>
-        <a href="#process" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100">Process</a>
-        <a href="#pricing" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100">Bei</a>
-        <a href="#testimonials" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100">Reviews</a>
-        <a href="https://wa.me/254712345678" class="btn-primary text-center py-4 rounded-xl font-bold flex items-center justify-center space-x-2">
+        <a href="#services" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100" data-sw="Huduma" data-en="Services">Huduma</a>
+        <a href="#why-us" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100" data-sw="Kutuhusu" data-en="About Us">Kutuhusu</a>
+        <a href="#process" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100" data-sw="Mchakato" data-en="Process">Mchakato</a>
+        <a href="#pricing" class="text-lg font-semibold text-[var(--lumora-dark)] py-2 border-b border-gray-100" data-sw="Bei" data-en="Pricing">Bei</a>
+        <a href="#contact" class="btn-primary text-center py-4 rounded-xl font-bold flex items-center justify-center space-x-2">
           <i class="fab fa-whatsapp"></i>
-          <span>Piga Quote (WhatsApp)</span>
+          <span data-sw="Piga Quote (WhatsApp)" data-en="Get Quote (WhatsApp)">Piga Quote (WhatsApp)</span>
         </a>
       </div>
     </div>
@@ -175,22 +338,22 @@
         <div class="w-full lg:w-3/5 text-white">
           <div class="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-sm px-5 py-2.5 rounded-full mb-8 border border-white/20">
             <span class="w-2 h-2 bg-[var(--lumora-accent)] rounded-full"></span>
-            <span class="text-sm font-medium tracking-wide uppercase">Mombasa's #1 Premium Care</span>
+            <span class="text-sm font-medium tracking-wide uppercase" data-sw="Huduma #1 ya Mombasa" data-en="Mombasa's #1 Premium Care">Huduma #1 ya Mombasa</span>
           </div>
           <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif leading-tight mb-6">
-            Nuru Nyumbani <span class="italic font-light text-[var(--lumora-accent)]">Yako!</span>
+            <span data-sw="Nuru Nyumbani" data-en="Light to Your">Nuru Nyumbani</span> <span class="italic font-light text-[var(--lumora-accent)]" data-sw="Yako!" data-en="Home!">Yako!</span>
           </h1>
-          <p class="text-lg md:text-xl text-white/90 mb-10 max-w-xl leading-relaxed">
-            Deep cleaning, fumigation, laundry, errands &amp; more — delivered with care.
+          <p class="text-lg md:text-xl text-white/90 mb-10 max-w-xl leading-relaxed" data-sw="Usafi wa kina, kuua wadudu, kufulia nguo, na huduma nyingine — zinatolewa kwa upendo." data-en="Deep cleaning, fumigation, laundry, errands & more — delivered with care.">
+            Usafi wa kina, kuua wadudu, kufulia nguo, na huduma nyingine — zinatolewa kwa upendo.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 mb-12">
-            <a href="https://wa.me/254712345678" class="btn-primary text-[var(--lumora-dark)] px-8 py-4 rounded-full font-bold text-center flex items-center justify-center space-x-2" style="box-shadow:0 0 40px rgba(26,245,208,.3)">
-              <i class="fab fa-whatsapp"></i>
-              <span>Book a Service</span>
+            <a href="#contact" class="btn-primary text-[var(--lumora-dark)] px-8 py-4 rounded-full font-bold text-center flex items-center justify-center space-x-2" style="box-shadow:0 0 40px rgba(26,245,208,.3)">
+              <i class="fas fa-paper-plane"></i>
+              <span data-sw="Omba Huduma" data-en="Request Service">Omba Huduma</span>
             </a>
             <a href="#services" class="border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white px-8 py-4 rounded-full font-bold text-center hover:bg-white hover:text-[var(--lumora-dark)] transition flex items-center justify-center space-x-2">
               <i class="fas fa-compass"></i>
-              <span>Explore Services</span>
+              <span data-sw="Tazama Huduma" data-en="Explore Services">Tazama Huduma</span>
             </a>
           </div>
         </div>
@@ -206,9 +369,9 @@
                   <i class="fas fa-star"></i>
                 </div>
                 <div>
-                  <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Guarantee</p>
-                  <p class="font-bold text-[var(--lumora-dark)]">100% Satisfaction</p>
-                  <p class="text-xs text-gray-500">In Mombasa County</p>
+                  <p class="text-xs font-bold text-gray-400 uppercase tracking-wider" data-sw="Dhamana" data-en="Guarantee">Dhamana</p>
+                  <p class="font-bold text-[var(--lumora-dark)]" data-sw="Kuridhika 100%" data-en="100% Satisfaction">Kuridhika 100%</p>
+                  <p class="text-xs text-gray-500" data-sw="Mombasa nzima" data-en="In Mombasa County">Mombasa nzima</p>
                 </div>
               </div>
             </div>
@@ -222,9 +385,9 @@
   <section id="why-us" class="section-py bg-white relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
       <div class="text-center mb-16">
-        <span class="text-[var(--lumora-secondary)] font-semibold uppercase tracking-[0.2em] text-sm">Why Choose Lumora</span>
-        <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mt-4 mb-6">Built for the <span class="italic text-gradient">Coast</span></h2>
-        <p class="text-gray-500 max-w-2xl mx-auto text-lg">Mombasa living brings salt-air, high humidity, and tropical pests. We don't just clean; we protect your investment with specialized coastal solutions.</p>
+        <span class="text-[var(--lumora-secondary)] font-semibold uppercase tracking-[0.2em] text-sm" data-sw="Kwa Nini Lumora" data-en="Why Choose Lumora">Kwa Nini Lumora</span>
+        <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mt-4 mb-6"><span data-sw="Imeundwa kwa" data-en="Built for the">Imeundwa kwa</span> <span class="italic text-gradient" data-sw="Pwani" data-en="Coast">Pwani</span></h2>
+        <p class="text-gray-500 max-w-2xl mx-auto text-lg" data-sw="Maisha ya Mombasa yanaleta chumvi hewani, unyevu, na wadudu wa kitropiki. Hatusafishi tu; tunalinda uwekezaji wako." data-en="Mombasa living brings salt-air, high humidity, and tropical pests. We don't just clean; we protect your investment with specialized coastal solutions.">Maisha ya Mombasa yanaleta chumvi hewani, unyevu, na wadudu wa kitropiki. Hatusafishi tu; tunalinda uwekezaji wako.</p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -232,32 +395,32 @@
           <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-6" style="box-shadow:inset 0 2px 10px rgba(1,28,24,.06)">
             <i class="fas fa-water text-2xl text-[var(--lumora-accent)]"></i>
           </div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">Salt-Air Shield</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">Specialized removal of sticky salt residue from windows, sink and furniture to prevent long-term corrosion.</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="Kinga ya Chumvi" data-en="Salt-Air Shield">Kinga ya Chumvi</h3>
+          <p class="text-gray-600 text-sm leading-relaxed" data-sw="Kuondoa uchafu wa chumvi kwenye madirisha na samani ili kuzuia kutu." data-en="Specialized removal of sticky salt residue from windows and furniture to prevent corrosion.">Kuondoa uchafu wa chumvi kwenye madirisha na samani ili kuzuia kutu.</p>
         </div>
 
         <div class="card-hover bg-[var(--lumora-surfaceLight)] rounded-[1.5rem] p-8" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
           <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-6" style="box-shadow:inset 0 2px 10px rgba(1,28,24,.06)">
             <i class="fas fa-shield-virus text-2xl text-[var(--lumora-secondary)]"></i>
           </div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">Pest Defense</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">Eco-friendly Non-toxic, pet &amp; Kid safe, effective pest-control for a healthy, worry-free home.</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="Kinga ya Wadudu" data-en="Pest Defense">Kinga ya Wadudu</h3>
+          <p class="text-gray-600 text-sm leading-relaxed" data-sw="Kuua wadudu kwa njia salama, isiyo na sumu kwa watoto na wanyama." data-en="Eco-friendly, non-toxic pest control safe for kids and pets.">Kuua wadudu kwa njia salama, isiyo na sumu kwa watoto na wanyama.</p>
         </div>
 
         <div class="card-hover bg-[var(--lumora-surfaceLight)] rounded-[1.5rem] p-8" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
           <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-6" style="box-shadow:inset 0 2px 10px rgba(1,28,24,.06)">
             <i class="fas fa-mobile-screen text-2xl text-[var(--lumora-accent)]"></i>
           </div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">M-Pesa Easy</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">Seamless, cashless payments for every service. Secure and instant for busy homeowners.</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="M-Pesa Rahisi" data-en="M-Pesa Easy">M-Pesa Rahisi</h3>
+          <p class="text-gray-600 text-sm leading-relaxed" data-sw="Malipo ya kisasa, yasiyo na fedha taslimu. Salama na ya haraka." data-en="Seamless, cashless payments. Secure and instant for busy homeowners.">Malipo ya kisasa, yasiyo na fedha taslimu. Salama na ya haraka.</p>
         </div>
 
         <div class="card-hover bg-[var(--lumora-surfaceLight)] rounded-[1.5rem] p-8" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
           <div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-6" style="box-shadow:inset 0 2px 10px rgba(1,28,24,.06)">
             <i class="fas fa-users text-2xl text-[var(--lumora-tertiary)]"></i>
           </div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">Local Pride</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">All staff are Mombasa residents. We understand our community's home-care needs.</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="Wazawa wa Mombasa" data-en="Local Pride">Wazawa wa Mombasa</h3>
+          <p class="text-gray-600 text-sm leading-relaxed" data-sw="Wafanyakazi wetu wote ni wakazi wa Mombasa. Tunaelewa mahitaji ya jamii." data-en="All staff are Mombasa residents. We understand our community's needs.">Wafanyakazi wetu wote ni wakazi wa Mombasa. Tunaelewa mahitaji ya jamii.</p>
         </div>
       </div>
     </div>
@@ -267,8 +430,8 @@
   <section id="services" class="section-py bg-[var(--lumora-surfaceLight)] relative">
     <div class="max-w-7xl mx-auto px-6 md:px-8">
       <div class="text-center mb-16">
-        <span class="text-[var(--lumora-accent)] font-semibold uppercase tracking-[0.2em] text-sm">Our Services</span>
-        <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mt-4 mb-6">Bespoke <span class="italic text-gradient">Services</span></h2>
+        <span class="text-[var(--lumora-accent)] font-semibold uppercase tracking-[0.2em] text-sm" data-sw="Huduma Zetu" data-en="Our Services">Huduma Zetu</span>
+        <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mt-4 mb-6"><span data-sw="Huduma" data-en="Bespoke">Huduma</span> <span class="italic text-gradient" data-sw="Maalum" data-en="Services">Maalum</span></h2>
         <div class="w-20 h-1 bg-gradient-to-r from-[var(--lumora-accent)] to-[var(--lumora-secondary)] mx-auto mt-4 rounded-full"></div>
       </div>
 
@@ -277,11 +440,11 @@
           <img src="https://images.pexels.com/photos/3972703/pexels-photo-3972703.jpeg" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Deep Cleaning" />
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--lumora-dark)] via-[var(--lumora-dark)]/50 to-transparent opacity-90"></div>
           <div class="absolute bottom-0 left-0 right-0 p-8 md:p-10 text-white">
-            <span class="bg-gradient-to-r from-[var(--lumora-accent)] to-[var(--lumora-secondary)] px-4 py-1.5 rounded-full text-xs font-bold uppercase mb-4 inline-block text-[var(--lumora-dark)]">Most Requested</span>
-            <h3 class="text-3xl font-serif mb-3">Mazoezi ya Kusafisha</h3>
-            <p class="text-white/90 mb-6 max-w-md text-sm md:text-base">Total sanitisation from Nyali villas to Mvita apartments. We battle coastal dust and humidity build-up with eco-friendly solutions.</p>
-            <a href="https://wa.me/254712345678" class="inline-flex items-center space-x-2 font-bold hover:text-[var(--lumora-accent)] transition">
-              <span>Get a Quote</span>
+            <span class="bg-gradient-to-r from-[var(--lumora-accent)] to-[var(--lumora-secondary)] px-4 py-1.5 rounded-full text-xs font-bold uppercase mb-4 inline-block text-[var(--lumora-dark)]" data-sw="Inayoombwa Zaidi" data-en="Most Requested">Inayoombwa Zaidi</span>
+            <h3 class="text-3xl font-serif mb-3" data-sw="Usafi wa Kina" data-en="Deep Cleaning">Usafi wa Kina</h3>
+            <p class="text-white/90 mb-6 max-w-md text-sm md:text-base" data-sw="Usafishaji kamili kutoka vilani vya Nyali hadi nyumba za Mvita. Tunapambana na vumbi na unyevu kwa dawa salama." data-en="Total sanitization from Nyali villas to Mvita apartments. We battle coastal dust and humidity with eco-friendly solutions.">Usafishaji kamili kutoka vilani vya Nyali hadi nyumba za Mvita. Tunapambana na vumbi na unyevu kwa dawa salama.</p>
+            <a href="#contact" class="inline-flex items-center space-x-2 font-bold hover:text-[var(--lumora-accent)] transition">
+              <span data-sw="Pata Bei" data-en="Get a Quote">Pata Bei</span>
               <i class="fas fa-arrow-right"></i>
             </a>
           </div>
@@ -294,9 +457,9 @@
             <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 text-xl">
               <i class="fas fa-bug text-[var(--lumora-accent)]"></i>
             </div>
-            <h3 class="text-2xl font-serif mb-2">Kulinda Viumbe</h3>
-            <p class="text-white/80 text-sm mb-6 leading-relaxed">Professional fumigation. Special focus on Bed Bugs, Cockroaches and Mosquitoes.</p>
-            <a href="https://wa.me/254712345678" class="btn-primary text-xs px-6 py-3 rounded-full font-bold inline-block">Book Fumigation</a>
+            <h3 class="text-2xl font-serif mb-2" data-sw="Kuua Wadudu" data-en="Pest Control">Kuua Wadudu</h3>
+            <p class="text-white/80 text-sm mb-6 leading-relaxed" data-sw="Fumigation ya kitaalamu. Kwa kunguni, mende, na mbu." data-en="Professional fumigation. Special focus on bed bugs, cockroaches, and mosquitoes.">Fumigation ya kitaalamu. Kwa kunguni, mende, na mbu.</p>
+            <a href="#contact" class="btn-primary text-xs px-6 py-3 rounded-full font-bold inline-block" data-sw="Agiza Fumigation" data-en="Book Fumigation">Agiza Fumigation</a>
           </div>
         </div>
       </div>
@@ -307,148 +470,118 @@
   <section id="process" class="section-py bg-white relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
       <div class="text-center mb-16">
-        <span class="text-[var(--lumora-accent)] font-semibold uppercase tracking-[0.2em] text-sm">How It Works</span>
-        <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mt-4 mb-6">Simple <span class="italic text-gradient">Process</span></h2>
-        <p class="text-gray-500 max-w-2xl mx-auto text-lg">From booking to completion, we make home care effortless.</p>
+        <span class="text-[var(--lumora-accent)] font-semibold uppercase tracking-[0.2em] text-sm" data-sw="Jinsi Inavyofanya Kazi" data-en="How It Works">Jinsi Inavyofanya Kazi</span>
+        <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mt-4 mb-6"><span data-sw="Mchakato" data-en="Simple">Mchakato</span> <span class="italic text-gradient" data-sw="Rahisi" data-en="Process">Rahisi</span></h2>
+        <p class="text-gray-500 max-w-2xl mx-auto text-lg" data-sw="Kutoka kuagiza hadi kukamilisha, tunafanya utunzaji wa nyumba uwe rahisi." data-en="From booking to completion, we make home care effortless.">Kutoka kuagiza hadi kukamilisha, tunafanya utunzaji wa nyumba uwe rahisi.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="text-center">
           <div class="w-20 h-20 mx-auto bg-gradient-to-br from-[var(--lumora-accent)] to-[var(--lumora-secondary)] rounded-2xl flex items-center justify-center text-[var(--lumora-dark)] text-2xl font-bold mb-6" style="box-shadow:0 0 40px rgba(26,245,208,.3)">1</div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">WhatsApp Us</h3>
-          <p class="text-gray-500 text-sm">Send us a message with your service needs and location</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="Wasiliana Nasi" data-en="WhatsApp Us">Wasiliana Nasi</h3>
+          <p class="text-gray-500 text-sm" data-sw="Tutumie ujumbe na mahitaji yako na eneo lako" data-en="Send us a message with your service needs and location">Tutumie ujumbe na mahitaji yako na eneo lako</p>
         </div>
         <div class="text-center">
           <div class="w-20 h-20 mx-auto bg-gradient-to-br from-[var(--lumora-secondary)] to-[var(--lumora-tertiary)] rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-6" style="box-shadow:0 0 60px rgba(209,110,249,.3)">2</div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">Get a Quote</h3>
-          <p class="text-gray-500 text-sm">Receive a transparent, detailed quote within minutes</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="Pata Bei" data-en="Get a Quote">Pata Bei</h3>
+          <p class="text-gray-500 text-sm" data-sw="Pokea bei ya wazi ndani ya dakika" data-en="Receive a transparent, detailed quote within minutes">Pokea bei ya wazi ndani ya dakika</p>
         </div>
         <div class="text-center">
           <div class="w-20 h-20 mx-auto bg-gradient-to-br from-[var(--lumora-tertiary)] to-[var(--lumora-accent)] rounded-2xl flex items-center justify-center text-[var(--lumora-dark)] text-2xl font-bold mb-6">3</div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">Confirm &amp; Pay</h3>
-          <p class="text-gray-500 text-sm">Approve the quote and pay via M-Pesa or cash</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="Thibitisha & Lipa" data-en="Confirm & Pay">Thibitisha & Lipa</h3>
+          <p class="text-gray-500 text-sm" data-sw="Kubali bei na ulipe kupitia M-Pesa au pesa taslimu" data-en="Approve the quote and pay via M-Pesa or cash">Kubali bei na ulipe kupitia M-Pesa au pesa taslimu</p>
         </div>
         <div class="text-center">
           <div class="w-20 h-20 mx-auto bg-[var(--lumora-dark)] rounded-2xl flex items-center justify-center text-[var(--lumora-accent)] text-2xl font-bold mb-6">4</div>
-          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3">We Deliver</h3>
-          <p class="text-gray-500 text-sm">Our certified team arrives and transforms your space</p>
+          <h3 class="text-xl font-bold text-[var(--lumora-dark)] mb-3" data-sw="Tunawasilisha" data-en="We Deliver">Tunawasilisha</h3>
+          <p class="text-gray-500 text-sm" data-sw="Timu yetu iliyoidhinishwa inafika na kubadilisha nafasi yako" data-en="Our certified team arrives and transforms your space">Timu yetu iliyoidhinishwa inafika na kubadilisha nafasi yako</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section id="testimonials" class="section-py bg-[var(--lumora-surfaceLight)]">
-    <div class="max-w-7xl mx-auto px-6 md:px-12">
-      <div class="text-center mb-16">
-        <span class="text-[var(--lumora-secondary)] font-semibold uppercase tracking-[0.2em] text-sm">Testimonials</span>
-        <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mt-4 mb-6">What Our <span class="italic text-gradient">Clients Say</span></h2>
-        <p class="text-gray-500 max-w-2xl mx-auto text-lg">Real feedback from Mombasa homeowners who trust Lumora.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-[2rem] p-8 card-hover" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
-          <div class="flex items-center gap-1 mb-4">
-            <i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i>
-          </div>
-          <p class="text-gray-600 mb-6 leading-relaxed">"Lumora saved my Nyali villa from salt damage! Their team understood exactly what coastal homes need. The windows haven't been this clear in years."</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-gradient-to-br from-[var(--lumora-accent)] to-[var(--lumora-secondary)] rounded-full flex items-center justify-center"><span class="text-[var(--lumora-dark)] font-bold">AM</span></div>
-            <div><div class="font-semibold text-[var(--lumora-dark)]">Amina Mohamed</div><div class="text-gray-500 text-sm">Nyali Homeowner</div></div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-[2rem] p-8 card-hover" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
-          <div class="flex items-center gap-1 mb-4">
-            <i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i>
-          </div>
-          <p class="text-gray-600 mb-6 leading-relaxed">"Finally, a company that shows up on time! The fumigation was thorough and safe for my kids. No more mosquito problems. Asante sana!"</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-gradient-to-br from-[var(--lumora-secondary)] to-[var(--lumora-tertiary)] rounded-full flex items-center justify-center"><span class="text-white font-bold">JK</span></div>
-            <div><div class="font-semibold text-[var(--lumora-dark)]">James Karanja</div><div class="text-gray-500 text-sm">Kisauni Resident</div></div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-[2rem] p-8 card-hover" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
-          <div class="flex items-center gap-1 mb-4">
-            <i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i><i class="fas fa-star text-[var(--lumora-gold)]"></i>
-          </div>
-          <p class="text-gray-600 mb-6 leading-relaxed">"The errand service is a lifesaver! They handled my grocery shopping and bill payments while I was at work. Very professional and trustworthy."</p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-gradient-to-br from-[var(--lumora-tertiary)] to-[var(--lumora-accent)] rounded-full flex items-center justify-center"><span class="text-[var(--lumora-dark)] font-bold">FO</span></div>
-            <div><div class="font-semibold text-[var(--lumora-dark)]">Fatuma Omar</div><div class="text-gray-500 text-sm">Mvita Business Owner</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
+  <!-- Pricing with 3D Flip Cards -->
   <section id="pricing" class="section-py bg-[var(--lumora-dark)] text-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-[var(--lumora-accent)]/10 rounded-full blur-3xl"></div>
+
     <div class="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
       <div class="text-center mb-16">
-        <span class="text-[var(--lumora-accent)] font-semibold uppercase tracking-[0.2em] text-sm">Transparent Pricing</span>
-        <h2 class="text-4xl md:text-5xl font-serif mt-4 mb-6">Our <span class="italic text-gradient">Packages</span></h2>
-        <p class="text-white/70 max-w-2xl mx-auto text-lg">Transparent pricing designed for Mombasa's lifestyle. Select the level of care your home deserves.</p>
+        <span class="text-[var(--lumora-accent)] font-semibold uppercase tracking-[0.2em] text-sm" data-sw="Bei Wazi" data-en="Transparent Pricing">Bei Wazi</span>
+        <h2 class="text-4xl md:text-5xl font-serif mt-4 mb-6"><span data-sw="Pakiti" data-en="Our">Pakiti</span> <span class="italic text-gradient" data-sw="Zetu" data-en="Packages">Zetu</span></h2>
+        <p class="text-white/70 max-w-2xl mx-auto text-lg" data-sw="Bei wazi iliyoundwa kwa maisha ya Mombasa. Chagua kiwango cha utunzaji nyumba yako inastahili." data-en="Transparent pricing designed for Mombasa's lifestyle. Select the level of care your home deserves.">Bei wazi iliyoundwa kwa maisha ya Mombasa. Chagua kiwango cha utunzaji nyumba yako inastahili.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-        <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10 card-hover flex flex-col">
-          <h3 class="text-2xl font-serif mb-2">NURU</h3>
-          <p class="text-[var(--lumora-accent)] text-sm font-bold uppercase tracking-widest mb-6">The Refresh</p>
-          <div class="text-5xl font-serif mb-8">5,000<span class="text-lg text-white/50 font-sans ml-1">/vst</span></div>
-          <ul class="space-y-4 mb-10 flex-grow">
-            <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-accent)]"></i><span>Standard Surface Clean</span></li>
-            <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-accent)]"></i><span>Dusting &amp; Vacuuming</span></li>
-            <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-accent)]"></i><span>Internal Window Clean</span></li>
-          </ul>
-          <a href="https://wa.me/254712345678" class="w-full py-4 rounded-full border-2 border-white/20 text-center font-bold hover:bg-white hover:text-[var(--lumora-dark)] transition">Book Nuru</a>
+      <div class="pricing-container grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <!-- Nuru -->
+        <div class="pricing-card-wrapper">
+          <div class="pricing-card shine-effect bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10 flex flex-col h-full">
+            <h3 class="text-2xl font-serif mb-2">NURU</h3>
+            <p class="text-[var(--lumora-accent)] text-sm font-bold uppercase tracking-widest mb-6" data-sw="Kuburudisha" data-en="The Refresh">Kuburudisha</p>
+            <div class="text-5xl font-serif mb-8">5,000<span class="text-lg text-white/50 font-sans ml-1">/vst</span></div>
+            <ul class="space-y-4 mb-10 flex-grow">
+              <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-accent)]"></i><span data-sw="Usafi wa Kawaida" data-en="Standard Surface Clean">Usafi wa Kawaida</span></li>
+              <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-accent)]"></i><span data-sw="Kufagia & Kuvuta Vumbi" data-en="Dusting & Vacuuming">Kufagia & Kuvuta Vumbi</span></li>
+              <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-accent)]"></i><span data-sw="Kusafisha Madirisha (Ndani)" data-en="Internal Window Clean">Kusafisha Madirisha (Ndani)</span></li>
+            </ul>
+            <button onclick="bookPackage('Nuru', '5,000 KES')" class="w-full py-4 rounded-full border-2 border-white/20 text-center font-bold hover:bg-white hover:text-[var(--lumora-dark)] transition" data-sw="Agiza Nuru" data-en="Book Nuru">Agiza Nuru</button>
+          </div>
         </div>
 
-        <div class="bg-white rounded-[2.5rem] p-8 md:p-10 text-[var(--lumora-dark)] shadow-2xl relative md:scale-105">
-          <div class="absolute top-0 right-0 bg-gradient-to-r from-[var(--lumora-accent)] to-[var(--lumora-secondary)] px-6 py-2 text-[var(--lumora-dark)] font-bold text-xs uppercase tracking-widest rounded-bl-3xl rounded-tr-[2.5rem]">Most Popular</div>
-          <h3 class="text-2xl font-serif mb-2">MWAMKOZI</h3>
-          <p class="text-[var(--lumora-secondary)] text-sm font-bold uppercase tracking-widest mb-6">The Renewal</p>
-          <div class="text-5xl font-serif mb-8">12,000<span class="text-lg text-gray-400 font-sans ml-1">/vst</span></div>
-          <ul class="space-y-4 mb-10">
-            <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span class="font-bold">Deep Cleaning Included</span></li>
-            <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span class="font-bold">Fumigation (Mosquitoes)</span></li>
-            <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span>Carpet &amp; Area Rug Clean</span></li>
-            <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span>Laundry (up to 12 items)</span></li>
-          </ul>
-          <a href="https://wa.me/254712345678" class="w-full py-4 rounded-full bg-[var(--lumora-dark)] text-white font-bold hover:bg-gradient-to-r hover:from-[var(--lumora-accent)] hover:to-[var(--lumora-secondary)] hover:text-[var(--lumora-dark)] transition shadow-lg block text-center">Book Mwamkozi</a>
+        <!-- Mwamkozi (Featured) -->
+        <div class="pricing-card-wrapper pricing-featured">
+          <div class="pricing-card shine-effect bg-white rounded-[2.5rem] p-8 md:p-10 text-[var(--lumora-dark)] relative">
+            <div class="absolute top-0 right-0 bg-gradient-to-r from-[var(--lumora-accent)] to-[var(--lumora-secondary)] px-6 py-2 text-[var(--lumora-dark)] font-bold text-xs uppercase tracking-widest rounded-bl-3xl rounded-tr-[2.5rem]" data-sw="Maarufu Zaidi" data-en="Most Popular">Maarufu Zaidi</div>
+            <h3 class="text-2xl font-serif mb-2">MWAMKOZI</h3>
+            <p class="text-[var(--lumora-secondary)] text-sm font-bold uppercase tracking-widest mb-6" data-sw="Kufanya Upya" data-en="The Renewal">Kufanya Upya</p>
+            <div class="text-5xl font-serif mb-8">12,000<span class="text-lg text-gray-400 font-sans ml-1">/vst</span></div>
+            <ul class="space-y-4 mb-10">
+              <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span class="font-bold" data-sw="Usafi wa Kina" data-en="Deep Cleaning Included">Usafi wa Kina</span></li>
+              <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span class="font-bold" data-sw="Fumigation (Mbu)" data-en="Fumigation (Mosquitoes)">Fumigation (Mbu)</span></li>
+              <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span data-sw="Kusafisha Mazulia" data-en="Carpet & Area Rug Clean">Kusafisha Mazulia</span></li>
+              <li class="flex items-center space-x-3 text-sm"><i class="fas fa-check-circle text-[var(--lumora-secondary)]"></i><span data-sw="Kufulia (hadi vipande 12)" data-en="Laundry (up to 12 items)">Kufulia (hadi vipande 12)</span></li>
+            </ul>
+            <button onclick="bookPackage('Mwamkozi', '12,000 KES')" class="w-full py-4 rounded-full bg-[var(--lumora-dark)] text-white font-bold hover:bg-gradient-to-r hover:from-[var(--lumora-accent)] hover:to-[var(--lumora-secondary)] hover:text-[var(--lumora-dark)] transition shadow-lg" data-sw="Agiza Mwamkozi" data-en="Book Mwamkozi">Agiza Mwamkozi</button>
+          </div>
         </div>
 
-        <div class="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10 card-hover flex flex-col">
-          <h3 class="text-2xl font-serif mb-2">HUSN</h3>
-          <p class="text-[var(--lumora-tertiary)] text-sm font-bold uppercase tracking-widest mb-6">The Revive</p>
-          <div class="text-5xl font-serif mb-8">20,000<span class="text-lg text-white/50 font-sans ml-1">/vst</span></div>
-          <ul class="space-y-4 mb-10 flex-grow">
-            <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span>Full Estate Deep Clean</span></li>
-            <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span>Termite Proofing</span></li>
-            <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span class="font-bold">Unlimited Laundry</span></li>
-            <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span>3 Hrs Errand Assistance</span></li>
-          </ul>
-          <a href="https://wa.me/254712345678" class="w-full py-4 rounded-full border-2 border-white/20 text-center font-bold hover:bg-white hover:text-[var(--lumora-dark)] transition">Book Husn</a>
+        <!-- Husn -->
+        <div class="pricing-card-wrapper">
+          <div class="pricing-card shine-effect bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-10 flex flex-col h-full">
+            <h3 class="text-2xl font-serif mb-2">HUSN</h3>
+            <p class="text-[var(--lumora-tertiary)] text-sm font-bold uppercase tracking-widest mb-6" data-sw="Kufufua" data-en="The Revive">Kufufua</p>
+            <div class="text-5xl font-serif mb-8">20,000<span class="text-lg text-white/50 font-sans ml-1">/vst</span></div>
+            <ul class="space-y-4 mb-10 flex-grow">
+              <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span data-sw="Usafi Kamili wa Nyumba" data-en="Full Estate Deep Clean">Usafi Kamili wa Nyumba</span></li>
+              <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span data-sw="Kinga ya Mchwa" data-en="Termite Proofing">Kinga ya Mchwa</span></li>
+              <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span class="font-bold" data-sw="Kufulia Bila Kikomo" data-en="Unlimited Laundry">Kufulia Bila Kikomo</span></li>
+              <li class="flex items-center space-x-3 text-sm text-white/80"><i class="fas fa-check-circle text-[var(--lumora-tertiary)]"></i><span data-sw="Masaa 3 ya Errand" data-en="3 Hrs Errand Assistance">Masaa 3 ya Errand</span></li>
+            </ul>
+            <button onclick="bookPackage('Husn', '20,000 KES')" class="w-full py-4 rounded-full border-2 border-white/20 text-center font-bold hover:bg-white hover:text-[var(--lumora-dark)] transition" data-sw="Agiza Husn" data-en="Book Husn">Agiza Husn</button>
+          </div>
         </div>
+      </div>
+
+      <div class="mt-16 text-center">
+        <p class="text-white/60 text-sm" data-sw="M-Pesa Till: 123 456 | Malipo yanakubaliwa" data-en="M-Pesa Till: 123 456 | Payments accepted">M-Pesa Till: 123 456 | Malipo yanakubaliwa</p>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- Contact / Quote Form -->
   <section id="contact" class="section-py bg-white relative">
     <div class="max-w-7xl mx-auto px-6 md:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
         <div>
-          <span class="text-[var(--lumora-accent)] font-bold uppercase tracking-[0.2em] text-sm mb-4 inline-block">Get Started</span>
-          <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mb-8">Let's Bring the <span class="italic text-gradient">Light</span></h2>
+          <span class="text-[var(--lumora-accent)] font-bold uppercase tracking-[0.2em] text-sm mb-4 inline-block" data-sw="Anza Sasa" data-en="Get Started">Anza Sasa</span>
+          <h2 class="text-4xl md:text-5xl font-serif text-[var(--lumora-dark)] mb-8"><span data-sw="Tulete" data-en="Let's Bring the">Tulete</span> <span class="italic text-gradient" data-sw="Nuru" data-en="Light">Nuru</span></h2>
 
           <div class="space-y-8 mt-12">
             <div class="flex space-x-5">
               <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center text-2xl text-green-500 flex-shrink-0"><i class="fab fa-whatsapp"></i></div>
               <div>
-                <h4 class="text-lg font-bold text-[var(--lumora-dark)] mb-1">WhatsApp Booking</h4>
-                <p class="text-gray-500 text-sm mb-2">The fastest way to reach us. Book instantly with our concierge.</p>
+                <h4 class="text-lg font-bold text-[var(--lumora-dark)] mb-1" data-sw="Agiza kwa WhatsApp" data-en="WhatsApp Booking">Agiza kwa WhatsApp</h4>
+                <p class="text-gray-500 text-sm mb-2" data-sw="Njia ya haraka zaidi kutufikia. Agiza mara moja." data-en="The fastest way to reach us. Book instantly with our concierge.">Njia ya haraka zaidi kutufikia. Agiza mara moja.</p>
                 <a href="https://wa.me/254712345678" class="text-green-600 font-bold hover:text-green-700 transition">+254 712 345 678</a>
               </div>
             </div>
@@ -456,40 +589,75 @@
             <div class="flex space-x-5">
               <div class="w-14 h-14 bg-[var(--lumora-surfaceLight)] rounded-2xl flex items-center justify-center text-2xl text-[var(--lumora-accent)] flex-shrink-0"><i class="fas fa-phone"></i></div>
               <div>
-                <h4 class="text-lg font-bold text-[var(--lumora-dark)] mb-1">Call Center</h4>
-                <p class="text-gray-500 text-sm mb-2">Available 8:00 AM – 8:00 PM Daily for custom quotes.</p>
+                <h4 class="text-lg font-bold text-[var(--lumora-dark)] mb-1" data-sw="Kituo cha Simu" data-en="Call Center">Kituo cha Simu</h4>
+                <p class="text-gray-500 text-sm mb-2" data-sw="Inapatikana 8:00 AM – 8:00 PM Kila Siku." data-en="Available 8:00 AM – 8:00 PM Daily for custom quotes.">Inapatikana 8:00 AM – 8:00 PM Kila Siku.</p>
                 <p class="font-bold text-[var(--lumora-dark)]">+254 712 345 678</p>
+              </div>
+            </div>
+
+            <div class="bg-[var(--lumora-surfaceLight)] p-6 rounded-2xl">
+              <h4 class="font-bold mb-4 flex items-center space-x-2 text-[var(--lumora-dark)]">
+                <i class="fas fa-map-marker-alt text-[var(--lumora-accent)]"></i>
+                <span data-sw="Maeneo Tunayohudumia" data-en="Service Areas">Maeneo Tunayohudumia</span>
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1.5 bg-white rounded-full text-sm font-medium text-gray-600">Nyali</span>
+                <span class="px-3 py-1.5 bg-white rounded-full text-sm font-medium text-gray-600">Kisauni</span>
+                <span class="px-3 py-1.5 bg-white rounded-full text-sm font-medium text-gray-600">Likoni</span>
+                <span class="px-3 py-1.5 bg-white rounded-full text-sm font-medium text-gray-600">Mvita</span>
+                <span class="px-3 py-1.5 bg-white rounded-full text-sm font-medium text-gray-600">Jomvu</span>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- Quote Form -->
         <div class="bg-[var(--lumora-surfaceLight)] rounded-[2.5rem] p-8 md:p-10 border border-gray-100" style="box-shadow:0 4px 30px rgba(1,28,24,.08)">
-          <h3 class="text-2xl font-serif text-[var(--lumora-dark)] mb-8">Piga Quote ya Bure</h3>
-          <form id="contact-form" class="space-y-5">
+          <h3 class="text-2xl font-serif text-[var(--lumora-dark)] mb-8" data-sw="Piga Quote ya Bure" data-en="Get a Free Quote">Piga Quote ya Bure</h3>
+          <form id="quote-form" class="space-y-5">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Jina Lako</label>
-                <input type="text" class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none" placeholder="Your name" required />
+              <div class="form-group">
+                <input type="text" id="form-name" name="name" placeholder=" " class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none" required />
+                <label for="form-name" data-sw="Jina Lako" data-en="Your Name">Jina Lako</label>
               </div>
-              <div>
-                <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Namba ya Simu</label>
-                <input type="tel" class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none" placeholder="0712..." required />
+              <div class="form-group">
+                <input type="tel" id="form-phone" name="phone" placeholder=" " class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none" required />
+                <label for="form-phone" data-sw="Namba ya Simu" data-en="Phone Number">Namba ya Simu</label>
               </div>
             </div>
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Area (Mtaa)</label>
-              <select class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none appearance-none cursor-pointer">
-                <option>Nyali</option><option>Kisauni</option><option>Likoni</option><option>Mvita</option><option>Jomvu</option><option>Other</option>
+            <div class="form-group">
+              <select id="form-area" name="area" class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none appearance-none cursor-pointer" required>
+                <option value="">-- Chagua --</option>
+                <option value="Nyali">Nyali</option>
+                <option value="Kisauni">Kisauni</option>
+                <option value="Likoni">Likoni</option>
+                <option value="Mvita">Mvita</option>
+                <option value="Jomvu">Jomvu</option>
+                <option value="Other">Other</option>
               </select>
+              <label for="form-area" data-sw="Eneo (Mtaa)" data-en="Area (Location)">Eneo (Mtaa)</label>
             </div>
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Message (Ujumbe)</label>
-              <textarea rows="4" class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none placeholder-gray-400 resize-none" placeholder="Tell us about your home..."></textarea>
+            <div class="form-group">
+              <select id="form-service" name="service" class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none appearance-none cursor-pointer" required>
+                <option value="">-- Chagua Huduma --</option>
+                <option value="Deep Cleaning">Deep Cleaning / Usafi wa Kina</option>
+                <option value="Fumigation">Fumigation / Kuua Wadudu</option>
+                <option value="Laundry">Laundry / Kufulia</option>
+                <option value="Window Cleaning">Window Cleaning / Kusafisha Madirisha</option>
+                <option value="Errands">Errands / Huduma Nyingine</option>
+                <option value="Package - Nuru">Package: Nuru (5,000 KES)</option>
+                <option value="Package - Mwamkozi">Package: Mwamkozi (12,000 KES)</option>
+                <option value="Package - Husn">Package: Husn (20,000 KES)</option>
+              </select>
+              <label for="form-service" data-sw="Aina ya Huduma" data-en="Service Type">Aina ya Huduma</label>
             </div>
-            <button type="submit" class="w-full py-5 bg-[var(--lumora-dark)] text-white rounded-full font-bold text-lg hover:bg-gradient-to-r hover:from-[var(--lumora-accent)] hover:to-[var(--lumora-secondary)] hover:text-[var(--lumora-dark)] transition" style="box-shadow:0 8px 30px rgba(1,28,24,.1)">
-              <i class="fas fa-paper-plane mr-2"></i>
-              Request Service
+            <div class="form-group">
+              <textarea id="form-message" name="message" rows="4" placeholder=" " class="input-focus w-full bg-white border-none px-5 py-4 rounded-2xl outline-none resize-none"></textarea>
+              <label for="form-message" data-sw="Ujumbe (Si Lazima)" data-en="Message (Optional)">Ujumbe (Si Lazima)</label>
+            </div>
+            <button type="submit" id="submit-quote-btn" class="w-full py-5 bg-[var(--lumora-dark)] text-white rounded-full font-bold text-lg hover:bg-gradient-to-r hover:from-[var(--lumora-accent)] hover:to-[var(--lumora-secondary)] hover:text-[var(--lumora-dark)] transition flex items-center justify-center space-x-2" style="box-shadow:0 8px 30px rgba(1,28,24,.1)">
+              <i class="fas fa-paper-plane"></i>
+              <span data-sw="Omba Huduma" data-en="Request Service">Omba Huduma</span>
             </button>
           </form>
         </div>
@@ -503,7 +671,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
         <div class="col-span-1">
           <span class="text-3xl font-extrabold tracking-tight mb-6 block bg-gradient-to-r from-white to-[var(--lumora-accent)] bg-clip-text text-transparent">LUMORA.</span>
-          <p class="text-white/70 text-sm leading-relaxed mb-6">Mombasa's trusted partner for premium home-care. From salt-air protection to lifestyle errands, we bring the light back to your home.</p>
+          <p class="text-white/70 text-sm leading-relaxed mb-6" data-sw="Mshirika wa kuaminika wa Mombasa kwa utunzaji wa nyumba za hali ya juu. Tunarudisha nuru nyumbani kwako." data-en="Mombasa's trusted partner for premium home-care. We bring the light back to your home.">Mshirika wa kuaminika wa Mombasa kwa utunzaji wa nyumba za hali ya juu. Tunarudisha nuru nyumbani kwako.</p>
           <div class="flex space-x-4">
             <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-[var(--lumora-accent)] hover:text-[var(--lumora-dark)] transition"><i class="fab fa-instagram text-lg"></i></a>
             <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-[var(--lumora-secondary)] hover:text-white transition"><i class="fab fa-facebook text-lg"></i></a>
@@ -512,16 +680,16 @@
         </div>
         <div class="hidden md:block"></div>
         <div>
-          <h5 class="font-bold mb-6 text-sm uppercase tracking-widest text-[var(--lumora-accent)]">Quick Links</h5>
+          <h5 class="font-bold mb-6 text-sm uppercase tracking-widest text-[var(--lumora-accent)]" data-sw="Viungo vya Haraka" data-en="Quick Links">Viungo vya Haraka</h5>
           <ul class="space-y-3 text-sm text-white/70">
-            <li><a href="#why-us" class="hover:text-white transition">About Our Mission</a></li>
-            <li><a href="#services" class="hover:text-white transition">Service Catalog</a></li>
-            <li><a href="#pricing" class="hover:text-white transition">Pricing Packages</a></li>
-            <li><a href="#contact" class="hover:text-white transition">Contact Us</a></li>
+            <li><a href="#why-us" class="hover:text-white transition" data-sw="Kuhusu Dhamira Yetu" data-en="About Our Mission">Kuhusu Dhamira Yetu</a></li>
+            <li><a href="#services" class="hover:text-white transition" data-sw="Orodha ya Huduma" data-en="Service Catalog">Orodha ya Huduma</a></li>
+            <li><a href="#pricing" class="hover:text-white transition" data-sw="Pakiti za Bei" data-en="Pricing Packages">Pakiti za Bei</a></li>
+            <li><a href="#contact" class="hover:text-white transition" data-sw="Wasiliana Nasi" data-en="Contact Us">Wasiliana Nasi</a></li>
           </ul>
         </div>
         <div>
-          <h5 class="font-bold mb-6 text-sm uppercase tracking-widest text-[var(--lumora-secondary)]">Support</h5>
+          <h5 class="font-bold mb-6 text-sm uppercase tracking-widest text-[var(--lumora-secondary)]" data-sw="Msaada" data-en="Support">Msaada</h5>
           <p class="text-white/70 text-sm mb-2">P.O. Box 12345, Mombasa</p>
           <p class="text-white/70 text-sm mb-2">+254 712 345 678</p>
           <p class="text-white/70 text-sm mb-6">hello@lumora.co.ke</p>
@@ -533,16 +701,31 @@
         <div class="flex space-x-6 mt-4 md:mt-0">
           <a href="#" class="hover:text-white transition">Privacy</a>
           <a href="#" class="hover:text-white transition">Terms</a>
-          <a href="#" class="hover:text-white transition">Cookies</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- Chatbot: professional icon bottom-right (above WhatsApp) -->
-  <div class="chat-fab-area chat-safe-area flex flex-col items-end gap-3">
+  <!-- Success Modal -->
+  <div id="success-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[var(--lumora-accent)] to-[var(--lumora-secondary)] flex items-center justify-center text-4xl text-[var(--lumora-dark)]">
+        <i class="fas fa-check"></i>
+      </div>
+      <h3 class="text-2xl font-serif text-[var(--lumora-dark)] mb-4" data-sw="Asante Sana!" data-en="Thank You!">Asante Sana!</h3>
+      <p class="text-gray-600 mb-6" id="modal-message" data-sw="Ombi lako limepokelewa. Tutakuwasiliana hivi karibuni kupitia WhatsApp." data-en="Your request has been received. We'll contact you shortly via WhatsApp.">Ombi lako limepokelewa. Tutakuwasiliana hivi karibuni kupitia WhatsApp.</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a id="modal-whatsapp" href="#" class="flex-1 btn-primary py-3 rounded-full font-bold text-center flex items-center justify-center space-x-2">
+          <i class="fab fa-whatsapp"></i>
+          <span data-sw="Fungua WhatsApp" data-en="Open WhatsApp">Fungua WhatsApp</span>
+        </a>
+        <button id="modal-close" class="flex-1 py-3 rounded-full border-2 border-gray-200 font-bold hover:bg-gray-100 transition" data-sw="Funga" data-en="Close">Funga</button>
+      </div>
+    </div>
+  </div>
 
-    <!-- Panel -->
+  <!-- Chatbot -->
+  <div class="chat-fab-area chat-safe-area flex flex-col items-end gap-3">
     <section id="chat-panel" class="chat-panel chat-hidden transition-all duration-200 bg-white rounded-3xl border border-gray-100 overflow-hidden">
       <header class="bg-[var(--lumora-dark)] text-white p-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -582,27 +765,49 @@
             <i class="fas fa-paper-plane"></i>
           </button>
         </div>
-
-        <div class="mt-3 flex items-center justify-between text-[11px] text-gray-400">
-          <button id="chat-to-whatsapp" class="font-bold text-green-600 hover:text-green-700 transition">Continue on WhatsApp</button>
-          <span>Typically replies &lt; 5 mins</span>
-        </div>
       </div>
     </section>
 
-    <!-- Icon (FAB) -->
     <button id="chat-fab" class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[var(--lumora-dark)] text-[var(--lumora-accent)] flex items-center justify-center text-2xl shadow-lg hover:scale-105 transition" style="box-shadow:0 20px 50px rgba(1,28,24,.18)" aria-label="Open chat" aria-expanded="false">
       <i id="chat-fab-icon" class="fas fa-comment-dots"></i>
     </button>
   </div>
 
-  <!-- Floating WhatsApp Button -->
+  <!-- WhatsApp FAB -->
   <a href="https://wa.me/254712345678" class="fixed bottom-6 right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:bg-green-600 hover:scale-105 transition-all" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
 
   <script>
-    // Mobile Menu Toggle
+    // ==================== LANGUAGE TOGGLE ====================
+    let currentLang = 'sw';
+    const langSwBtn = document.getElementById('lang-sw');
+    const langEnBtn = document.getElementById('lang-en');
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      
+      // Toggle active class
+      if (lang === 'sw') {
+        langSwBtn.classList.add('active');
+        langEnBtn.classList.remove('active');
+      } else {
+        langEnBtn.classList.add('active');
+        langSwBtn.classList.remove('active');
+      }
+
+      // Update all translatable elements
+      document.querySelectorAll('[data-sw][data-en]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) el.textContent = text;
+      });
+    }
+
+    langSwBtn?.addEventListener('click', () => setLanguage('sw'));
+    langEnBtn?.addEventListener('click', () => setLanguage('en'));
+
+    // ==================== MOBILE MENU ====================
     const menuBtn = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
 
@@ -611,22 +816,22 @@
       mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
     }
 
-    // Navbar compact on scroll
+    // ==================== NAVBAR SCROLL ====================
     window.addEventListener('scroll', () => {
       const nav = document.getElementById('nav-shell');
       if (!nav) return;
       if (window.scrollY > 50) {
         nav.classList.add('py-2');
-        nav.classList.remove('py-4');
+        nav.classList.remove('py-3', 'sm:py-4');
         nav.style.boxShadow = '0 20px 50px rgba(1,28,24,.15)';
       } else {
-        nav.classList.add('py-4');
+        nav.classList.add('py-3', 'sm:py-4');
         nav.classList.remove('py-2');
         nav.style.boxShadow = '0 4px 30px rgba(1,28,24,.08)';
       }
     });
 
-    // Smooth Scroll
+    // ==================== SMOOTH SCROLL ====================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -638,14 +843,77 @@
       });
     });
 
-    // Contact form
-    document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+    // ==================== PRICING CARDS ANIMATION ====================
+    const pricingObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.pricing-card-wrapper').forEach(card => {
+            card.classList.add('revealed');
+          });
+          pricingObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) pricingObserver.observe(pricingSection);
+
+    // ==================== BOOK PACKAGE FUNCTION ====================
+    function bookPackage(packageName, price) {
+      const serviceSelect = document.getElementById('form-service');
+      if (serviceSelect) {
+        serviceSelect.value = `Package - ${packageName}`;
+      }
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ==================== QUOTE FORM SUBMISSION ====================
+    const quoteForm = document.getElementById('quote-form');
+    const successModal = document.getElementById('success-modal');
+    const modalClose = document.getElementById('modal-close');
+    const modalWhatsApp = document.getElementById('modal-whatsapp');
+
+    quoteForm?.addEventListener('submit', function(e) {
       e.preventDefault();
-      alert('Asante sana! We have received your request.');
-      e.target.reset();
+
+      const name = document.getElementById('form-name').value.trim();
+      const phone = document.getElementById('form-phone').value.trim();
+      const area = document.getElementById('form-area').value;
+      const service = document.getElementById('form-service').value;
+      const message = document.getElementById('form-message').value.trim();
+
+      // Build WhatsApp message
+      const waMessage = encodeURIComponent(
+        `Jambo Lumora! 👋\n\n` +
+        `*Jina:* ${name}\n` +
+        `*Simu:* ${phone}\n` +
+        `*Eneo:* ${area}\n` +
+        `*Huduma:* ${service}\n` +
+        (message ? `*Ujumbe:* ${message}\n` : '') +
+        `\nNaomba quote ya huduma hii. Asante!`
+      );
+
+      const waLink = `https://wa.me/254712345678?text=${waMessage}`;
+      modalWhatsApp.href = waLink;
+
+      // Show success modal
+      successModal.classList.add('active');
+
+      // Reset form
+      quoteForm.reset();
     });
 
-    // Chat widget
+    modalClose?.addEventListener('click', () => {
+      successModal.classList.remove('active');
+    });
+
+    successModal?.addEventListener('click', (e) => {
+      if (e.target === successModal) {
+        successModal.classList.remove('active');
+      }
+    });
+
+    // ==================== CHAT WIDGET ====================
     const chatFab = document.getElementById('chat-fab');
     const chatFabIcon = document.getElementById('chat-fab-icon');
     const chatPanel = document.getElementById('chat-panel');
@@ -653,7 +921,6 @@
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     const chatSend = document.getElementById('chat-send');
-    const chatToWhatsApp = document.getElementById('chat-to-whatsapp');
 
     let chatOpen = false;
 
@@ -673,21 +940,11 @@
       }
     }
 
-    function toggleChat() { setChat(!chatOpen); }
-
-    chatFab?.addEventListener('click', toggleChat);
+    chatFab?.addEventListener('click', () => setChat(!chatOpen));
     chatClose?.addEventListener('click', () => setChat(false));
 
-    // Close on ESC
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && chatOpen) setChat(false);
-    });
-
-    // Close when clicking outside (desktop/tablet)
-    document.addEventListener('click', (e) => {
-      if (!chatOpen) return;
-      const within = chatPanel.contains(e.target) || chatFab.contains(e.target);
-      if (!within) setChat(false);
     });
 
     function escapeHtml(str) {
@@ -717,18 +974,28 @@
     function botReply(userText) {
       const t = userText.toLowerCase();
       if (t.includes('price') || t.includes('bei') || t.includes('pricing')) {
-        return 'Bei zetu zinaanza 5,000 KES. Una nyumba ya vyumba vingapi na uko eneo gani (Nyali/Kisauni/Likoni/Mvita/Jomvu)?';
+        return currentLang === 'sw' 
+          ? 'Bei zetu zinaanza 5,000 KES (Nuru), 12,000 KES (Mwamkozi), na 20,000 KES (Husn). Unahitaji pakiti gani?'
+          : 'Our prices start at 5,000 KES (Nuru), 12,000 KES (Mwamkozi), and 20,000 KES (Husn). Which package interests you?';
       }
-      if (t.includes('fumig') || t.includes('pest') || t.includes('bed') || t.includes('bug')) {
-        return 'Tuna fumigation salama (kid & pet friendly). Unapambana na wadudu gani na uko eneo gani?';
+      if (t.includes('fumig') || t.includes('pest') || t.includes('wadudu')) {
+        return currentLang === 'sw'
+          ? 'Tuna fumigation salama (kid & pet friendly). Unapambana na wadudu gani na uko eneo gani?'
+          : 'We offer safe fumigation (kid & pet friendly). What pests are you dealing with and where are you located?';
       }
-      if (t.includes('book') || t.includes('clean') || t.includes('booking')) {
-        return 'Sawa. Tuambie eneo (mtaa) na aina ya huduma (deep cleaning/laundry/errands) ili tukupe quote haraka.';
+      if (t.includes('book') || t.includes('clean') || t.includes('agiza') || t.includes('safisha')) {
+        return currentLang === 'sw'
+          ? 'Sawa! Tuambie eneo lako (Nyali/Kisauni/Likoni/Mvita/Jomvu) na huduma unayotaka.'
+          : 'Great! Tell us your area (Nyali/Kisauni/Likoni/Mvita/Jomvu) and the service you need.';
       }
-      if (t.includes('human') || t.includes('agent') || t.includes('call')) {
-        return 'Nakuunganisha na msaidizi. Bonyeza “Continue on WhatsApp” ili upate majibu ya haraka.';
+      if (t.includes('human') || t.includes('agent') || t.includes('call') || t.includes('mtu')) {
+        return currentLang === 'sw'
+          ? 'Nakuunganisha na msaidizi. Piga simu +254 712 345 678 au fungua WhatsApp.'
+          : 'Connecting you to an agent. Call +254 712 345 678 or open WhatsApp.';
       }
-      return 'Asante! Unaweza kuniambia uko eneo gani Mombasa na huduma unayotaka?';
+      return currentLang === 'sw'
+        ? 'Asante! Unaweza kuniambia uko eneo gani Mombasa na huduma unayotaka?'
+        : 'Thank you! Can you tell me your area in Mombasa and the service you need?';
     }
 
     function handleSend() {
@@ -754,22 +1021,6 @@
         setTimeout(() => addMessage(botReply(text), false), 350);
       });
     });
-
-    chatToWhatsApp?.addEventListener('click', () => {
-      const msg = encodeURIComponent('Jambo Lumora! Naomba huduma. Eneo langu ni ____ na nahitaji ____.' );
-      window.open(`https://wa.me/254712345678?text=${msg}`, '_blank');
-    });
-
-    // Optional: gentle nudge on first visit only
-    try {
-      const seen = localStorage.getItem('lumora_chat_seen');
-      if (!seen) {
-        setTimeout(() => {
-          setChat(true);
-          localStorage.setItem('lumora_chat_seen', '1');
-        }, 3500);
-      }
-    } catch(_) {}
   </script>
 </body>
 </html>
